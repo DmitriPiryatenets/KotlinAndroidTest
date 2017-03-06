@@ -1,0 +1,41 @@
+# More documentation about how to customize your build
+# can be found here:
+# https://docs.fastlane.tools
+fastlane_version "1.109.0"
+
+# This value helps us track success metrics for Fastfiles
+# we automatically generate. Feel free to remove this line
+# once you get things running smoothly!
+generated_fastfile_id "75e8d2a0-8be3-4986-98d8-7d4f18c42bdc"
+
+default_platform :android
+
+# Fastfile actions accept additional configuration, but
+# don't worry, fastlane will prompt you for required
+# info which you can add here later
+lane :beta do
+
+  def increment_version_code(gradle_build: 'android/app/build.gradle')
+    sh %Q{cd ../ && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "$2+1)}1' #{gradle_build})" > #{gradle_build} && cd -}
+    build_number_str = 234
+  end
+
+  increment_version_code gradle_build: 'app/build.gradle'
+
+  # build the release variant
+  gradle(
+    gradle_path: "/Users/dmytropiriatenets/Programs/gradle-3.4.1/bin/gradle",
+    task: "assembleDebug")
+
+  # upload to Beta by Crashlytics
+  crashlytics(
+    api_token: "693737af36dac1046bc01ebe51705d3cecfdaa8e",
+    build_secret: "262c115ff71fa68a2bca3296aa99f6bd2b476748282211ed9b0a01bb5b0f4d82",
+    groups: "Testersss"
+  )
+
+  slack(
+    slack_url: "https://hooks.slack.com/services/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",
+    message: "Successfully deployed new App Update. Build #{lane_context[SharedValues::BUILD_NUMBER]}"
+  )
+end

@@ -23,8 +23,8 @@ android {
         applicationId "test.kotlin.com.kotlinandroidtest"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.2"
+        versionCode 10
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
