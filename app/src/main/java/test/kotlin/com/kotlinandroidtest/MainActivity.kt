@@ -36,10 +36,15 @@ class MainActivity : AppCompatActivity() {
         Fabric.with(this, Crashlytics())
         setContentView(R.layout.activity_main)
         someOtherMethod()
+        someNewOtherMethod()
 
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         val navigation = findViewById(R.id.navigation) as BottomNavigationView
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    private fun someNewOtherMethod() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun someOtherMethod() {
